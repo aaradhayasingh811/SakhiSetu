@@ -32,7 +32,8 @@ const Layout = () => {
     {path :'/pcos' , icon :<FaAsterisk/>, label: 'PCOS Risk Checker' },
     {path: '/next-period', icon: <FiActivity />, label: 'Next Period Predictor' },
     {path: '/community', icon: <FiMessageSquare />, label: 'Community' },
-    {path : '/profile' , icon: <FiUsers />, label: 'Profile' }
+    {path : '/profile' , icon: <FiUsers />, label: 'Profile' },
+    // {path:'/my-post', icon: <FiUsers />, label: 'My Posts' },
 
   ];
 
@@ -63,7 +64,7 @@ const Layout = () => {
             <div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center">
               <FiHome className="text-white" />
             </div>
-            <span className="ml-2 text-xl font-bold text-gray-800">HormonalTwin</span>
+            <span className="ml-2 text-xl font-bold text-gray-800">SakhiSaathi</span>
           </div>
         </div>
         <div className="flex flex-col flex-grow p-4 overflow-auto">
@@ -104,7 +105,7 @@ const Layout = () => {
             <div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center">
               <FiHome className="text-white" />
             </div>
-            <span className="ml-2 text-xl font-bold text-gray-800">HormonalTwin</span>
+            <span className="ml-2 text-xl font-bold text-gray-800">SakhiSaathi</span>
           </div>
           <button 
             onClick={() => setMobileMenuOpen(false)}
@@ -158,7 +159,7 @@ const Layout = () => {
               <div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center md:hidden">
                 <FiHome className="text-white" />
               </div>
-              <span className="ml-2 text-xl font-bold text-gray-800 md:hidden">HormonalTwin</span>
+              <span className="ml-2 text-xl font-bold text-gray-800 md:hidden">SakhiSaathi</span>
               
               {/* Current page title for mobile */}
               {/* <span className="ml-4 text-lg font-medium text-gray-800 md:hidden">

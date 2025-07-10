@@ -108,7 +108,8 @@ const UserProfile = () => {
                   <p className="text-pink-100 text-sm">@{user.username}</p>
                 </div>
               </div>
-              <button
+              <div className="flex gap-3">
+                <button
                 onClick={() => setIsEditing(!isEditing)}
                 className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all ${isEditing ? 'bg-white text-pink-600 hover:bg-pink-50' : 'bg-pink-700 hover:bg-pink-600'}`}
               >
@@ -122,6 +123,14 @@ const UserProfile = () => {
                   </>
                 )}
               </button>
+              <button
+              className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all ${isEditing ? 'bg-white text-pink-600 hover:bg-pink-50' : 'bg-pink-700 hover:bg-pink-600'}`}
+              onClick={() => window.location.href = '/my-post'}
+              >
+
+                My Posts
+              </button>
+              </div>
             </div>
           </div>
 

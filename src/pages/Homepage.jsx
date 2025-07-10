@@ -138,7 +138,7 @@ const Homepage = () => {
             <div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center">
               <FiHeart className="text-white" />
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">HormonalTwin</span>
+            <span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">SakhiSaathi</span>
           </motion.div>
           <motion.div whileHover={{ scale: 1.05 }}>
             <a 
@@ -353,7 +353,7 @@ const Homepage = () => {
             className="text-center mb-12 sm:mb-16"
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">Trusted by Thousands</h2>
-            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">What our community says about HormonalTwin</p>
+            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">What our community says about SakhiSaathi</p>
           </motion.div>
           
           <div className="max-w-4xl mx-auto">
@@ -400,7 +400,7 @@ const Homepage = () => {
             className="text-center mb-12 sm:mb-16"
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">Frequently Asked Questions</h2>
-            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">Everything you need to know about HormonalTwin</p>
+            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">Everything you need to know about SakhiSaathi</p>
           </motion.div>
           
           <div className="space-y-3 sm:space-y-4">
@@ -465,10 +465,10 @@ const Homepage = () => {
               <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
                 <FiHeart className="text-white w-3 h-3 sm:w-4 sm:h-4" />
               </div>
-              <span className="text-base sm:text-lg font-bold">HormonalTwin</span>
+              <span className="text-base sm:text-lg font-bold">SakhiSaathi</span>
             </div>
             <p className="text-xs sm:text-sm text-gray-400 mb-4 md:mb-0">
-              © {new Date().getFullYear()} HormonalTwin. All rights reserved.
+              © {new Date().getFullYear()} SakhiSaathi. All rights reserved.
             </p>
             <div className="flex space-x-4 sm:space-x-6">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">

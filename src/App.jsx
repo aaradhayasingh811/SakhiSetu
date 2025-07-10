@@ -22,6 +22,7 @@ import PostDetail from './pages/community/PostDetail';
 import UserProfiles from './pages/UserProfile.jsx';
 import Education from './pages/Education';
 import './App.css'; 
+import UserSelfPosts from './pages/UserSelfPosts.jsx';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true); 
@@ -92,6 +93,7 @@ function App() {
           <Route path="/community/profile/:userId" element={<UserProfile />} />
           <Route path="/profile" element={<UserProfiles />} />
           <Route path="/education" element={<Education />} />
+          <Route path="/my-post" element={<UserSelfPosts />} />
 
         </Route>
       </Routes>
