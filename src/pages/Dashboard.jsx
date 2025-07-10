@@ -58,6 +58,8 @@ const fetchCurrentCycle = async () => {
       timeout: 10000,
     });
 
+    console.log("Current Cycle Data:", response.data);
+
     return {
       cycleDay: response.data.cycleDay || 1,
       phase: response.data.phase || "Unknown",
@@ -490,9 +492,9 @@ const QuickActions = ({ loading }) => {
     },
     {
       icon: <FiTrendingUp className="text-purple-500" />,
-      label: "View Report",
+      label: "Period Tracker",
       color: "hover:bg-purple-50",
-      action: () => navigate("/insights")
+      action: () => navigate("/period-tracker")
     },
     {
       icon: <FiShare2 className="text-green-500" />,

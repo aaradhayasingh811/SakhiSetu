@@ -1,256 +1,3 @@
-// import React, { useState } from 'react';
-// import { motion } from 'framer-motion';
-// import { FiUser, FiMail, FiLock, FiCalendar, FiClock } from 'react-icons/fi';
-// import { Link, useNavigate } from 'react-router-dom';
-// import axios from 'axios';
-
-// const RegisterPage = () => {
-//   const navigate = useNavigate();
-//   const [formData, setFormData] = useState({
-//     name: '',
-//     email: '',
-//     password: '',
-//     age: '',
-//     cycleLength: '',
-//     lastPeriodStart: ''
-//   });
-//   const [errors, setErrors] = useState({});
-//   const [isSubmitting, setIsSubmitting] = useState(false);
-//   const [apiError, setApiError] = useState('');
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData(prev => ({
-//       ...prev,
-//       [name]: value
-//     }));
-//     // Clear error when user types
-//     if (errors[name]) {
-//       setErrors(prev => ({
-//         ...prev,
-//         [name]: ''
-//       }));
-//     }
-//   };
-
-//   const validate = () => {
-//     const newErrors = {};
-    
-//     if (!formData.name.trim()) newErrors.name = 'Name is required';
-//     if (!formData.email.trim()) {
-//       newErrors.email = 'Email is required';
-//     } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-//       newErrors.email = 'Email is invalid';
-//     }
-//     if (!formData.password) {
-//       newErrors.password = 'Password is required';
-//     } else if (formData.password.length < 6) {
-//       newErrors.password = 'Password must be at least 6 characters';
-//     }
-//     if (!formData.age) {
-//       newErrors.age = 'Age is required';
-//     } else if (isNaN(formData.age)) {
-//       newErrors.age = 'Age must be a number';
-//     } else if (formData.age < 13 || formData.age > 60) {
-//       newErrors.age = 'Age must be between 13-60';
-//     }
-//     if (!formData.cycleLength) {
-//       newErrors.cycleLength = 'Cycle length is required';
-//     } else if (isNaN(formData.cycleLength)) {
-//       newErrors.cycleLength = 'Cycle length must be a number';
-//     } else if (formData.cycleLength < 21 || formData.cycleLength > 45) {
-//       newErrors.cycleLength = 'Cycle length must be between 21-45 days';
-//     }
-
-//     setErrors(newErrors);
-//     return Object.keys(newErrors).length === 0;
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     setApiError('');
-    
-//     if (!validate()) return;
-
-//     setIsSubmitting(true);
-
-//     try {
-//       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
-//         name: formData.name,
-//         email: formData.email,
-//         password: formData.password,
-//         age: parseInt(formData.age),
-//         avgCycleLength: parseInt(formData.cycleLength),
-//         lastPeriodStart: formData.lastPeriodStart || null
-//       });
-
-//       // Store token and redirect
-//       localStorage.setItem('token', response.data.token);
-//       navigate('/dashboard');
-//     } catch (error) {
-//       setApiError(error.response?.data?.message || error.message || 'Registration failed');
-//     } finally {
-//       setIsSubmitting(false);
-//     }
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center p-4 sm:p-6">
-//       <motion.div 
-//         initial={{ opacity: 0, y: 20 }}
-//         animate={{ opacity: 1, y: 0 }}
-//         className="w-full max-w-md bg-white rounded-xl sm:rounded-2xl shadow-lg overflow-hidden"
-//       >
-//         <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-5 sm:p-6 text-center">
-//           <h1 className="text-xl sm:text-2xl font-bold text-white">Create Your Account</h1>
-//           <p className="text-purple-100 mt-1 sm:mt-2 text-sm sm:text-base">
-//             Start your personalized hormonal health journey
-//           </p>
-//         </div>
-
-//         <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-3 sm:space-y-4">
-//           {apiError && (
-//             <div className="bg-red-50 text-red-600 p-2 sm:p-3 rounded-lg text-xs sm:text-sm">
-//               {apiError}
-//             </div>
-//           )}
-
-//           <div>
-//             <label className="block text-gray-700 text-xs sm:text-sm font-medium mb-1">Full Name</label>
-//             <div className="relative">
-//               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-//                 <FiUser className="text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
-//               </div>
-//               <input
-//                 type="text"
-//                 name="name"
-//                 value={formData.name}
-//                 onChange={handleChange}
-//                 className={`pl-9 sm:pl-10 w-full rounded-lg border ${errors.name ? 'border-red-500' : 'border-gray-300'} p-2 sm:p-2.5 text-sm sm:text-base focus:ring-2 focus:ring-purple-500 focus:border-transparent`}
-//                 placeholder="Your name"
-//               />
-//             </div>
-//             {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
-//           </div>
-
-//           <div>
-//             <label className="block text-gray-700 text-xs sm:text-sm font-medium mb-1">Email</label>
-//             <div className="relative">
-//               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-//                 <FiMail className="text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
-//               </div>
-//               <input
-//                 type="email"
-//                 name="email"
-//                 value={formData.email}
-//                 onChange={handleChange}
-//                 className={`pl-9 sm:pl-10 w-full rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'} p-2 sm:p-2.5 text-sm sm:text-base focus:ring-2 focus:ring-purple-500 focus:border-transparent`}
-//                 placeholder="your@email.com"
-//               />
-//             </div>
-//             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
-//           </div>
-
-//           <div>
-//             <label className="block text-gray-700 text-xs sm:text-sm font-medium mb-1">Password</label>
-//             <div className="relative">
-//               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-//                 <FiLock className="text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
-//               </div>
-//               <input
-//                 type="password"
-//                 name="password"
-//                 value={formData.password}
-//                 onChange={handleChange}
-//                 className={`pl-9 sm:pl-10 w-full rounded-lg border ${errors.password ? 'border-red-500' : 'border-gray-300'} p-2 sm:p-2.5 text-sm sm:text-base focus:ring-2 focus:ring-purple-500 focus:border-transparent`}
-//                 placeholder="At least 6 characters"
-//               />
-//             </div>
-//             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
-//           </div>
-
-//           <div>
-//             <label className="block text-gray-700 text-xs sm:text-sm font-medium mb-1">Age</label>
-//             <div className="relative">
-//               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-//                 <FiUser className="text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
-//               </div>
-//               <input
-//                 type="number"
-//                 name="age"
-//                 min="13"
-//                 max="60"
-//                 value={formData.age}
-//                 onChange={handleChange}
-//                 className={`pl-9 sm:pl-10 w-full rounded-lg border ${errors.age ? 'border-red-500' : 'border-gray-300'} p-2 sm:p-2.5 text-sm sm:text-base focus:ring-2 focus:ring-purple-500 focus:border-transparent`}
-//                 placeholder="Your age"
-//               />
-//             </div>
-//             {errors.age && <p className="text-red-500 text-xs mt-1">{errors.age}</p>}
-//           </div>
-
-//           <div>
-//             <label className="block text-gray-700 text-xs sm:text-sm font-medium mb-1">Average Cycle Length (days)</label>
-//             <div className="relative">
-//               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-//                 <FiClock className="text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
-//               </div>
-//               <input
-//                 type="number"
-//                 name="cycleLength"
-//                 min="21"
-//                 max="45"
-//                 value={formData.cycleLength}
-//                 onChange={handleChange}
-//                 className={`pl-9 sm:pl-10 w-full rounded-lg border ${errors.cycleLength ? 'border-red-500' : 'border-gray-300'} p-2 sm:p-2.5 text-sm sm:text-base focus:ring-2 focus:ring-purple-500 focus:border-transparent`}
-//                 placeholder="Typically 28-32 days"
-//               />
-//             </div>
-//             {errors.cycleLength && <p className="text-red-500 text-xs mt-1">{errors.cycleLength}</p>}
-//           </div>
-
-//           <div>
-//             <label className="block text-gray-700 text-xs sm:text-sm font-medium mb-1">Last Period Date?</label>
-//             <div className="relative">
-//               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-//                 <FiCalendar className="text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
-//               </div>
-//               <input
-//                 type="date"
-//                 name="lastPeriodStart"
-//                 value={formData.lastPeriodStart}
-//                 onChange={handleChange}
-//                 className="pl-9 sm:pl-10 w-full rounded-lg border border-gray-300 p-2 sm:p-2.5 text-sm sm:text-base focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-//               />
-//             </div>
-//           </div>
-
-//           <div className="pt-1 sm:pt-2">
-//             <motion.button
-//               whileHover={{ scale: 1.02 }}
-//               whileTap={{ scale: 0.98 }}
-//               type="submit"
-//               disabled={isSubmitting}
-//               className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-2 sm:py-3 rounded-lg font-medium hover:shadow-lg transition-all duration-300 disabled:opacity-70 text-sm sm:text-base"
-//             >
-//               {isSubmitting ? 'Creating account...' : 'Create Account'}
-//             </motion.button>
-//           </div>
-
-//           <div className="text-center text-xs sm:text-sm text-gray-600 pt-1 sm:pt-2">
-//             Already have an account?{' '}
-//             <Link to="/login" className="text-purple-600 hover:underline font-medium">
-//               Log in
-//             </Link>
-//           </div>
-//         </form>
-//       </motion.div>
-//     </div>
-//   );
-// };
-
-// export default RegisterPage;
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiUser, FiMail, FiLock, FiCalendar, FiClock } from 'react-icons/fi';
@@ -288,11 +35,13 @@ const RegisterPage = () => {
   const validate = () => {
     const newErrors = {};
     
-    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.name.trim()) {
+      newErrors.name = 'Please enter your full name';
+    }
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = 'Email address is required';
     } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
+      newErrors.email = 'Please enter a valid email address';
     }
     if (!formData.password) {
       newErrors.password = 'Password is required';
@@ -304,7 +53,7 @@ const RegisterPage = () => {
     } else if (isNaN(formData.age)) {
       newErrors.age = 'Age must be a number';
     } else if (formData.age < 13 || formData.age > 60) {
-      newErrors.age = 'Age must be between 13-60';
+      newErrors.age = 'Age must be between 13-60 years';
     }
     if (!formData.cycleLength) {
       newErrors.cycleLength = 'Cycle length is required';
@@ -339,7 +88,30 @@ const RegisterPage = () => {
       localStorage.setItem('token', response.data.token);
       navigate('/dashboard');
     } catch (error) {
-      setApiError(error.response?.data?.message || error.message || 'Registration failed');
+      let errorMessage = 'Registration failed. Please try again.';
+      
+      if (error.response) {
+        switch (error.response.status) {
+          case 400:
+            errorMessage = 'Invalid registration data. Please check your inputs.';
+            break;
+          case 409:
+            errorMessage = 'Email already registered. Please login or use a different email.';
+            break;
+          case 422:
+            errorMessage = 'Validation error. Please check your inputs.';
+            break;
+          case 500:
+            errorMessage = 'Server error. Please try again later.';
+            break;
+          default:
+            errorMessage = error.response.data?.message || errorMessage;
+        }
+      } else if (error.request) {
+        errorMessage = 'Network error. Please check your internet connection.';
+      }
+      
+      setApiError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -415,8 +187,13 @@ const RegisterPage = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               {apiError && (
-                <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm">
-                  {apiError}
+                <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-lg mb-4">
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    <span className="font-medium">{apiError}</span>
+                  </div>
                 </div>
               )}
 
@@ -436,7 +213,14 @@ const RegisterPage = () => {
                       placeholder="Your name"
                     />
                   </div>
-                  {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+                  {errors.name && (
+                    <p className="text-red-600 text-xs mt-1 flex items-center">
+                      <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      {errors.name}
+                    </p>
+                  )}
                 </div>
 
                 <div className="col-span-2">
@@ -454,7 +238,14 @@ const RegisterPage = () => {
                       placeholder="your@email.com"
                     />
                   </div>
-                  {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                  {errors.email && (
+                    <p className="text-red-600 text-xs mt-1 flex items-center">
+                      <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      {errors.email}
+                    </p>
+                  )}
                 </div>
 
                 <div className="col-span-2">
@@ -472,7 +263,14 @@ const RegisterPage = () => {
                       placeholder="At least 6 characters"
                     />
                   </div>
-                  {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+                  {errors.password && (
+                    <p className="text-red-600 text-xs mt-1 flex items-center">
+                      <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      {errors.password}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -492,7 +290,14 @@ const RegisterPage = () => {
                       placeholder="Your age"
                     />
                   </div>
-                  {errors.age && <p className="text-red-500 text-xs mt-1">{errors.age}</p>}
+                  {errors.age && (
+                    <p className="text-red-600 text-xs mt-1 flex items-center">
+                      <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      {errors.age}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -510,10 +315,16 @@ const RegisterPage = () => {
                       onChange={handleChange}
                       className={`pl-10 w-full rounded-lg border ${errors.cycleLength ? 'border-red-500' : 'border-gray-300'} p-2.5 text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent`}
                       placeholder="Typically 28-32"
-                      required
                     />
                   </div>
-                  {errors.cycleLength && <p className="text-red-500 text-xs mt-1">{errors.cycleLength}</p>}
+                  {errors.cycleLength && (
+                    <p className="text-red-600 text-xs mt-1 flex items-center">
+                      <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      {errors.cycleLength}
+                    </p>
+                  )}
                 </div>
 
                 <div className="col-span-2">
@@ -528,7 +339,6 @@ const RegisterPage = () => {
                       value={formData.lastPeriodStart}
                       onChange={handleChange}
                       className="pl-10 w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                      required
                     />
                   </div>
                 </div>
@@ -560,7 +370,7 @@ const RegisterPage = () => {
                   Log in
                 </Link>
               </div>
-               <div className="text-center text-sm text-gray-600 pt-2">
+              <div className="text-center text-sm text-gray-600 pt-2">
                 Return to {' '}
                 <Link to="/" className="text-purple-600 hover:underline font-medium">
                   Home 
