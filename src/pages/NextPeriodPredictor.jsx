@@ -14,7 +14,7 @@ const NextPeriodPredictor = () => {
     setShowEncouragement(false);
 
     try {
-      const { data } = await axios.get('http://localhost:5000/api/prediction/predict-next-cycle', {
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/prediction/predict-next-cycle`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         }
