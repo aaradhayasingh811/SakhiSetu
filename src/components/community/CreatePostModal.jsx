@@ -37,31 +37,80 @@ const CreatePostModal = ({ isOpen, onClose, categories }) => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setIsSubmitting(true);
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setError('');
+  //   setIsSubmitting(true);
     
-    try {
-      const token = localStorage.getItem('token');
-      await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/community/posts`,
-        formData,
+  //   try {
+  //     const token = localStorage.getItem('token');
+  //     await axios.post(
+  //       `${import.meta.env.VITE_API_URL}/api/community/posts`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           'Authorization': `Bearer ${token}`,
+  //           'Content-Type': 'application/json'
+  //         }
+  //       }
+  //     );
+  //     onClose();
+  //   } catch (err) {
+  //     console.error('Error creating post:', err);
+  //     setError(err.response?.data?.message || 'Failed to create post. Please try again.');
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
+  setIsSubmitting(true);
+
+  try {
+    const token = localStorage.getItem('token');
+
+    const tagIds = [];
+    for (const tagName of formData.tags) {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/community/tags/resolve`,
+        { name: tagName },
         {
           headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
-      onClose();
-    } catch (err) {
-      console.error('Error creating post:', err);
-      setError(err.response?.data?.message || 'Failed to create post. Please try again.');
-    } finally {
-      setIsSubmitting(false);
+      tagIds.push(res.data._id); 
     }
-  };
+
+    // Step 2: Submit post with tag IDs
+    await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/community/posts`,
+      {
+        title: formData.title,
+        content: formData.content,
+        category: formData.category,
+        tags: tagIds
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    onClose();
+  } catch (err) {
+    console.error('Error creating post:', err);
+    setError(err.response?.data?.message || 'Failed to create post. Please try again.');
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   if (!isOpen) return null;
 
