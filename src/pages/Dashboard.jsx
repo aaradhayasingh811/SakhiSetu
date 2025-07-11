@@ -55,7 +55,7 @@ const fetchCurrentCycle = async () => {
 
     const response = await axios.get(`${API_URL}/cycles/current`, {
       headers: { Authorization: `Bearer ${token}` },
-      timeout: 10000,
+      timeout: 30000,
     });
 
     console.log("Current Cycle Data:", response.data);
@@ -81,7 +81,7 @@ const fetchHormoneData = async (currentDay) => {
       { currentDay },
       {
         headers: { Authorization: `Bearer ${token}` },
-        timeout: 10000,
+        timeout: 30000,
       }
     );
 

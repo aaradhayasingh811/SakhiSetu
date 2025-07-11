@@ -135,12 +135,12 @@ const UserSelfPosts = () => {
           </div>
           <h3 className="text-xl font-medium text-gray-800 mb-2">No posts yet</h3>
           <p className="text-gray-500 mb-4">You haven't created any posts in the community.</p>
-          <button 
+          {/* <button 
             onClick={() => navigate('/community/create-post')}
             className="text-indigo-600 hover:text-indigo-800 font-medium text-sm transition-colors"
           >
             Create your first post
-          </button>
+          </button> */}
         </div>
       </div>
     );
